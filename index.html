@@ -143,6 +143,10 @@ input[type="number"] {
   cursor: pointer;
   font-family: inherit;
 }
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 .small {
   font-size: 12px;
   color: var(--muted);
@@ -170,7 +174,7 @@ input[type="number"] {
     </div>
     <div>
       <label>Quota (GB)</label>
-      <input type="number" id="inpQuota" min="1" step="0.01" placeholder="0">
+      <input type="number" id="inpQuota" min="0" step="0.01" placeholder="0">
     </div>
     <div>
       <label>Used (GB)</label>
@@ -186,8 +190,8 @@ input[type="number"] {
     </div>
 
     <div style="grid-column:1/3; display:flex; gap:8px; justify-content:flex-end;">
-      <button class="btn" id="addCardBtn">Add Card</button>
-      <button class="btn" id="exportAllBtn" style="background:#1d7aef">Export All Cards</button>
+      <button class="btn" id="addCardBtn" aria-label="Add new client card">Add Card</button>
+      <button class="btn" id="exportAllBtn" style="background:#1d7aef" aria-label="Export all client cards as images">Export All Cards</button>
     </div>
   </div>
 </div>
@@ -229,7 +233,7 @@ function createCard({name, phone, quota, used, days, hours}) {
     <div class="right">
       <div class="pill">
         <small class="small">Status</small>
-        <div style="width:8px;height:8px;border-radius:50%;background:var(--success)"></div>
+        <div style="width:8px;height:8px;border-radius:50%;background:${used > quota || (days === 0 && hours === 0) ? '#ff3d3d' : 'var(--success)'}"></div>
       </div>
     </div>
   `;
@@ -238,25 +242,35 @@ function createCard({name, phone, quota, used, days, hours}) {
   const usedFixed = (used || 0).toFixed(2);
   const quotaFixed = (quota || 0).toFixed(2);
   const trafficPercent = quota > 0 ? Math.min(100, (used / quota) * 100) : 0;
-  const totalHours = 30*24;
-  const remainingHours = (days||0)*24 + (hours||0);
+  const totalHours = 30 * 24;
+  const remainingHours = (days || 0) * 24 + (hours || 0);
   const timePercent = Math.min(100, (remainingHours / totalHours) * 100);
 
   card.querySelector('.fill-traffic').style.width = trafficPercent + '%';
   card.querySelector('.fill-time').style.width = timePercent + '%';
   card.querySelector('.usedGB').textContent = usedFixed + ' GB';
   card.querySelector('.quotaGB').textContent = quotaFixed + ' GB';
-  card.querySelector('.remaining').textContent = (days||0)+'d '+(hours||0)+'h';
+  card.querySelector('.remaining').textContent = (days || 0) + 'd ' + (hours || 0) + 'h';
 }
 
 addCardBtn.addEventListener('click', () => {
+  const quota = parseFloat(inpQuota.value) || 0;
+  const used = parseFloat(inpUsed.value) || 0;
+  const hours = parseInt(inpHours.value) || 0;
+  const days = parseInt(inpDays.value) || 0;
+
+  if (quota < 0 || used < 0 || hours < 0 || hours > 23 || days < 0) {
+    alert('Please enter valid values (non-negative quota/used, hours 0-23, non-negative days).');
+    return;
+  }
+
   const data = {
     name: inpName.value || '—',
     phone: inpPhone.value || '—',
-    quota: parseFloat(inpQuota.value) || 0,
-    used: parseFloat(inpUsed.value) || 0,
-    days: parseInt(inpDays.value) || 0,
-    hours: parseInt(inpHours.value) || 0
+    quota,
+    used,
+    days,
+    hours
   };
   createCard(data);
   inpName.value = inpPhone.value = inpQuota.value = inpUsed.value = inpDays.value = inpHours.value = '';
@@ -264,15 +278,28 @@ addCardBtn.addEventListener('click', () => {
 
 exportAllBtn.addEventListener('click', async () => {
   const cards = cardsContainer.querySelectorAll('.card');
+  if (cards.length === 0) {
+    alert('No cards to export.');
+    return;
+  }
+  const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();
+  exportAllBtn.disabled = true;
+  exportAllBtn.textContent = 'Exporting...';
   let count = 1;
   for (const card of cards) {
-    const canvas = await html2canvas(card, {scale:2, backgroundColor:null});
+    await new Promise(resolve => setTimeout(resolve, 100)); // Prevent browser overload
+    const canvas = await html2canvas(card, {
+      scale: 2,
+      backgroundColor: bgColor // Dynamically use --bg
+    });
     const link = document.createElement('a');
     link.download = `client-card-${count}.png`;
     link.href = canvas.toDataURL('image/png');
     link.click();
     count++;
   }
+  exportAllBtn.disabled = false;
+  exportAllBtn.textContent = 'Export All Cards';
 });
 </script>
 </body>
