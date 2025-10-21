@@ -3,15 +3,12 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Client Traffic Card</title>
+<title>Client Traffic Cards Batch</title>
 <style>
 @font-face {
   font-family: "Storopia";
   src: url("https://raw.githubusercontent.com/dim-ghub/fonts/refs/heads/main/Storopia.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
 }
-
 :root {
   --bg: #061021;
   --card: #0b1624;
@@ -19,170 +16,40 @@
   --accent: #ff8c3d;
   --success: #27d27a;
 }
-
-* {
-  box-sizing: border-box;
-  font-family: "Storopia", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-}
-
-body {
-  margin: 24px;
-  background: linear-gradient(180deg, #03111a 0%, #071624 100%);
-  color: #e6eef6;
-}
-
-.wrap { max-width: 940px; margin: 0 auto; }
-
-.card {
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-  border: 1px solid rgba(255,255,255,0.04);
-  padding: 18px;
-  border-radius: 10px;
-  display: flex;
-  align-items: flex-start;
-  gap: 18px;
-  flex-wrap: wrap;
-}
-
-.client {
-  min-width: 360px;
-  flex: 1;
-}
-
-.client .name { font-size: 16px; font-weight: 700; }
-.client .phone { color: var(--muted); margin-top: 6px; }
-
-.pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: #071322;
-  padding: 6px 8px;
-  border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.03);
-}
-
-.traffic { flex: 1; min-width: 260px; }
-
-.traffic .numbers { display: flex; justify-content: space-between; align-items: center; }
-
-.usage { margin-top: 8px; }
-
-.bar {
-  height: 12px;
-  background: rgba(255,255,255,0.04);
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-  margin-bottom: 6px;
-}
-
-.bar .fill {
-  height: 100%;
-  width: 0%;
-  transition: width .4s ease;
-}
-
+* { box-sizing: border-box; font-family: "Storopia", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+body { margin: 24px; background: linear-gradient(180deg, #03111a 0%, #071624 100%); color: #e6eef6; }
+.wrap { max-width: 1000px; margin: 0 auto; }
+.card { background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent); border:1px solid rgba(255,255,255,0.04); padding:18px; border-radius:10px; display:flex; align-items:flex-start; gap:18px; flex-wrap:wrap; margin-bottom:16px; }
+.client { min-width: 360px; flex:1; }
+.client .name { font-size:16px; font-weight:700; }
+.client .phone { color: var(--muted); margin-top:6px; }
+.pill { display:inline-flex; align-items:center; gap:8px; background:#071322; padding:6px 8px; border-radius:8px; border:1px solid rgba(255,255,255,0.03); }
+.traffic { flex:1; min-width:260px; }
+.traffic .numbers { display:flex; justify-content:space-between; align-items:center; }
+.usage { margin-top:8px; }
+.bar { height:12px; background:rgba(255,255,255,0.04); border-radius:8px; overflow:hidden; position:relative; margin-bottom:6px; }
+.bar .fill { height:100%; width:0%; transition: width .4s ease; }
 .fill-traffic { background: linear-gradient(90deg, var(--accent), #ffb37a); }
 .fill-time { background: linear-gradient(90deg, #27d27a, #8fffc0); }
-
-.stats {
-  display: flex;
-  gap: 12px;
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.stat {
-  background: rgba(255,255,255,0.02);
-  padding: 6px 10px;
-  border-radius: 8px;
-}
-
-.right {
-  min-width: 220px;
-  text-align: right;
-  flex-shrink: 0;
-}
-
-.duration { color: #bfeee0; font-size: 13px; margin-top: -2px; }
-
-.controls {
-  margin-top: 18px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
-
-input[type="text"], input[type="number"] {
-  width: 100%;
-  padding: 8px;
-  border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.03);
-  background: rgba(255,255,255,0.01);
-  color: inherit;
-}
-
-.btn {
-  display: inline-block;
-  padding: 8px 12px;
-  border-radius: 8px;
-  background: var(--accent);
-  color: #061018;
-  border: none;
-  cursor: pointer;
-  font-family: inherit;
-}
-
-.small { font-size: 12px; color: var(--muted); }
-
-@media (max-width:760px) {
-  .card { flex-direction: column; align-items: stretch; }
-  .right { text-align: left; margin-top: 12px; }
-  .client { margin-bottom: 12px; }
-}
+.stats { display:flex; gap:12px; color:var(--muted); font-size:13px; flex-wrap:wrap; margin-top:4px; }
+.stat { background: rgba(255,255,255,0.02); padding:6px 10px; border-radius:8px; }
+.right { min-width:220px; text-align:right; flex-shrink:0; }
+.duration { color:#bfeee0; font-size:13px; margin-top:-2px; }
+.controls { margin-top:18px; display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+label { display:block; font-size:13px; color:var(--muted); margin-bottom:6px; }
+input[type="text"], input[type="number"] { width:100%; padding:8px; border-radius:8px; border:1px solid rgba(255,255,255,0.03); background: rgba(255,255,255,0.01); color:inherit; }
+.btn { display:inline-block; padding:8px 12px; border-radius:8px; background:var(--accent); color:#061018; border:none; cursor:pointer; font-family:inherit; }
+.small { font-size:12px; color:var(--muted); }
+@media(max-width:760px){ .card{flex-direction:column; align-items:stretch;} .right{text-align:left;margin-top:12px;} .client{margin-bottom:12px;} }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div id="cardWrapper">
-    <div class="card" id="card">
-      <div class="client">
-        <div style="display:flex;align-items:center;gap:12px">
-          <div style="width:48px;height:48px;border-radius:8px;background:linear-gradient(180deg,#142c3a,#0b1b24);display:flex;align-items:center;justify-content:center;font-weight:700">?</div>
-          <div>
-            <div class="name" id="clientName">—</div>
-            <div class="phone" id="clientPhone">—</div>
-          </div>
-        </div>
 
-        <!-- Combined Dual Progress Bar -->
-        <div class="usage">
-          <div class="bar" aria-hidden="true">
-            <div class="fill fill-traffic" id="fillBar" style="width:0%"></div>
-          </div>
-          <div class="bar" aria-hidden="true">
-            <div class="fill fill-time" id="timeFill" style="width:0%"></div>
-          </div>
-          <div class="stats">
-            <div class="stat">Used: <span id="usedGB">0.00 GB</span></div>
-            <div class="stat">Quota: <span id="quotaGB">0.00 GB</span></div>
-            <div class="stat">Remaining: <span id="remaining">0d 0h</span></div>
-          </div>
-        </div>
-      </div>
+  <!-- Container for multiple cards -->
+  <div id="cardsContainer"></div>
 
-      <div class="right">
-        <div class="pill">
-          <small class="small">Status</small>
-          <div style="width:8px;height:8px;border-radius:50%;background:var(--success)"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
+  <!-- Control Panel -->
   <div class="controls">
     <div>
       <label>Client name</label>
@@ -192,7 +59,6 @@ input[type="text"], input[type="number"] {
       <label>Client phone / note</label>
       <input type="text" id="inpPhone" placeholder="Enter phone or note">
     </div>
-
     <div>
       <label>Quota (GB)</label>
       <input type="number" id="inpQuota" min="1" step="0.01" placeholder="0">
@@ -201,7 +67,6 @@ input[type="text"], input[type="number"] {
       <label>Used (GB)</label>
       <input type="number" id="inpUsed" min="0" step="0.01" placeholder="0">
     </div>
-
     <div>
       <label>Remaining time (days)</label>
       <input type="number" id="inpDays" min="0" step="1" placeholder="0">
@@ -211,82 +76,103 @@ input[type="text"], input[type="number"] {
       <input type="number" id="inpHours" min="0" max="23" step="1" placeholder="0">
     </div>
 
-    <div style="grid-column:1/3;display:flex;gap:8px;justify-content:flex-end">
-      <button class="btn" id="applyBtn">Apply</button>
-      <button class="btn" id="resetBtn" style="background:#2b3f4a">Reset</button>
-      <button class="btn" id="shareBtn" style="background:#1d7aef">Download Card</button>
+    <div style="grid-column:1/3; display:flex; gap:8px; justify-content:flex-end;">
+      <button class="btn" id="addCardBtn">Add Card</button>
+      <button class="btn" id="exportAllBtn" style="background:#1d7aef">Export All Cards</button>
     </div>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
+const cardsContainer = document.getElementById('cardsContainer');
 const inpName = document.getElementById('inpName');
 const inpPhone = document.getElementById('inpPhone');
 const inpQuota = document.getElementById('inpQuota');
 const inpUsed = document.getElementById('inpUsed');
 const inpDays = document.getElementById('inpDays');
 const inpHours = document.getElementById('inpHours');
-const applyBtn = document.getElementById('applyBtn');
-const resetBtn = document.getElementById('resetBtn');
-const shareBtn = document.getElementById('shareBtn');
-const card = document.getElementById('card');
+const addCardBtn = document.getElementById('addCardBtn');
+const exportAllBtn = document.getElementById('exportAllBtn');
 
-function updateCard() {
-  const name = inpName.value || '—';
-  const phone = inpPhone.value || '—';
-  const quota = parseFloat(inpQuota.value) || 0;
-  const used = parseFloat(inpUsed.value) || 0;
-  const days = parseInt(inpDays.value) || 0;
-  const hours = parseInt(inpHours.value) || 0;
+function createCard({name, phone, quota, used, days, hours}) {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `
+    <div class="client">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="width:48px;height:48px;border-radius:8px;background:linear-gradient(180deg,#142c3a,#0b1b24);display:flex;align-items:center;justify-content:center;font-weight:700">?</div>
+        <div>
+          <div class="name">${name}</div>
+          <div class="phone">${phone}</div>
+        </div>
+      </div>
+      <div class="usage">
+        <div class="bar"><div class="fill fill-traffic" style="width:0%"></div></div>
+        <div class="bar"><div class="fill fill-time" style="width:0%"></div></div>
+        <div class="stats">
+          <div class="stat">Used: <span class="usedGB">0.00 GB</span></div>
+          <div class="stat">Quota: <span class="quotaGB">0.00 GB</span></div>
+          <div class="stat">Remaining: <span class="remaining">0d 0h</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="right">
+      <div class="pill">
+        <small class="small">Status</small>
+        <div style="width:8px;height:8px;border-radius:50%;background:var(--success)"></div>
+      </div>
+    </div>
+  `;
+  cardsContainer.appendChild(card);
 
-  document.getElementById('clientName').textContent = name;
-  document.getElementById('clientPhone').textContent = phone;
-
-  const usedFixed = used.toFixed(2);
-  const quotaFixed = quota.toFixed(2);
-  document.getElementById('usedGB').textContent = usedFixed + ' GB';
-  document.getElementById('quotaGB').textContent = quotaFixed + ' GB';
-  document.getElementById('remaining').textContent = days + 'd ' + hours + 'h';
-
+  // Update card progress bars
+  const usedFixed = (used || 0).toFixed(2);
+  const quotaFixed = (quota || 0).toFixed(2);
   const trafficPercent = quota > 0 ? Math.min(100, (used / quota) * 100) : 0;
-  document.getElementById('fillBar').style.width = trafficPercent + '%';
-
   const totalHours = 30*24;
-  const remainingHours = days*24 + hours;
+  const remainingHours = (days||0)*24 + (hours||0);
   const timePercent = Math.min(100, (remainingHours / totalHours) * 100);
-  document.getElementById('timeFill').style.width = timePercent + '%';
+
+  card.querySelector('.fill-traffic').style.width = trafficPercent + '%';
+  card.querySelector('.fill-time').style.width = timePercent + '%';
+  card.querySelector('.usedGB').textContent = usedFixed + ' GB';
+  card.querySelector('.quotaGB').textContent = quotaFixed + ' GB';
+  card.querySelector('.remaining').textContent = (days||0)+'d '+(hours||0)+'h';
 }
 
-applyBtn.addEventListener('click', updateCard);
-resetBtn.addEventListener('click', () => {
+addCardBtn.addEventListener('click', () => {
+  const data = {
+    name: inpName.value || '—',
+    phone: inpPhone.value || '—',
+    quota: parseFloat(inpQuota.value) || 0,
+    used: parseFloat(inpUsed.value) || 0,
+    days: parseInt(inpDays.value) || 0,
+    hours: parseInt(inpHours.value) || 0
+  };
+  createCard(data);
+
+  // reset inputs
   inpName.value = '';
   inpPhone.value = '';
   inpQuota.value = '';
   inpUsed.value = '';
   inpDays.value = '';
   inpHours.value = '';
-  updateCard();
 });
 
-shareBtn.addEventListener('click', async () => {
-  const tempContainer = document.createElement('div');
-  tempContainer.style.background = 'linear-gradient(180deg, #03111a 0%, #071624 100%)';
-  tempContainer.style.padding = '24px';
-  tempContainer.style.display = 'inline-block';
-  tempContainer.appendChild(card.cloneNode(true));
-  document.body.appendChild(tempContainer);
-
-  const canvas = await html2canvas(tempContainer, { scale: 2, backgroundColor: null });
-  document.body.removeChild(tempContainer);
-
-  const link = document.createElement('a');
-  link.download = 'client-card.png';
-  link.href = canvas.toDataURL('image/png');
-  link.click();
+exportAllBtn.addEventListener('click', async () => {
+  const cards = cardsContainer.querySelectorAll('.card');
+  let count = 1;
+  for (const card of cards) {
+    const canvas = await html2canvas(card, {scale:2, backgroundColor:null});
+    const link = document.createElement('a');
+    link.download = `client-card-${count}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    count++;
+  }
 });
-
-updateCard();
 </script>
 </body>
 </html>
